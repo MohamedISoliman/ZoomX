@@ -32,7 +32,7 @@ public class NetworkLogInterceptor implements Interceptor {
         if (!SettingsManager.get(context).isNetworkTrackingEnabled()) {
             return chain.proceed(chain.request());
         }
-        
+
         RequestEntity.Builder requestBuilder = new RequestEntity.Builder();
         Response response = null;
 
@@ -62,7 +62,7 @@ public class NetworkLogInterceptor implements Interceptor {
             requestBuilder.setResponseBody(responseBody(response));
         }
 
-        NetworkLogManager.log(requestBuilder);
+        NetworkLogManager.log(requestBuilder.create());
         return response;
     }
 

@@ -13,14 +13,14 @@ import timber.log.Timber;
 
 public class NetworkLogManager {
 
-    public static void log(RequestEntity.Builder builder) {
-        if (builder != null)
-            insertRequest(builder).subscribe();
+    public static void log(RequestEntity requestEntity) {
+        if (requestEntity != null)
+            insertRequest(requestEntity).subscribe();
     }
 
-    private static Completable insertRequest(RequestEntity.Builder builder) {
+    private static Completable insertRequest(RequestEntity requestEntity) {
         return Completable
-                .fromAction(() -> ZoomX.getRequestDao().insertRequest(builder.create()))
+                .fromAction(() -> ZoomX.getRequestDao().insertRequest(requestEntity))
                 .doOnError(Timber::e)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
