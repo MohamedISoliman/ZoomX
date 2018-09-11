@@ -3,7 +3,6 @@ package com.zoomx.zoomx.config;
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.util.Log;
-
 import com.zoomx.zoomx.db.AppDatabase;
 import com.zoomx.zoomx.db.RequestDao;
 import com.zoomx.zoomx.ui.menu.ZoomxMenuService;
@@ -69,7 +68,6 @@ public final class ZoomX {
             });
         }
     }
-
 
 
     @NonNull
