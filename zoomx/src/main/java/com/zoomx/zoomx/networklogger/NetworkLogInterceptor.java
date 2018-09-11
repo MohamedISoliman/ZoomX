@@ -2,25 +2,17 @@ package com.zoomx.zoomx.networklogger;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-
 import com.zoomx.zoomx.model.RequestEntity;
 import com.zoomx.zoomx.ui.settings.SettingsManager;
+import okhttp3.*;
+import okio.Buffer;
+import okio.BufferedSource;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import okhttp3.Headers;
-import okhttp3.Interceptor;
-import okhttp3.MediaType;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import okio.Buffer;
-import okio.BufferedSource;
 
 /**
  * Created by Ahmed Fathallah on 11/19/2017.
@@ -37,12 +29,13 @@ public class NetworkLogInterceptor implements Interceptor {
 
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
-        RequestEntity.Builder requestBuilder = new RequestEntity.Builder();
-        Response response = null;
-
         if (!SettingsManager.get(context).isNetworkTrackingEnabled()) {
             return chain.proceed(chain.request());
         }
+        
+        RequestEntity.Builder requestBuilder = new RequestEntity.Builder();
+        Response response = null;
+
         Request retrofitRequest = chain.request();
         RequestBody requestBody = retrofitRequest.body();
 
