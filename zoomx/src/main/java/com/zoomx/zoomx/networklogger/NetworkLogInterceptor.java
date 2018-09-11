@@ -7,6 +7,7 @@ import com.zoomx.zoomx.ui.settings.SettingsManager;
 import okhttp3.*;
 import okio.Buffer;
 import okio.BufferedSource;
+import timber.log.Timber;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -50,7 +51,7 @@ public class NetworkLogInterceptor implements Interceptor {
         try {
             response = chain.proceed(retrofitRequest);
         } catch (Exception e) {
-            e.printStackTrace();
+            Timber.e(e);
         }
         long timeTookInMs = System.currentTimeMillis() - startDateInMs;
         requestBuilder.setStartDate(new Date(startDateInMs));
