@@ -3,6 +3,7 @@ package com.zoomx.zoomx.ui.requestlist;
 import android.app.SearchManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,7 +14,13 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.zoomx.zoomx.R;
 import com.zoomx.zoomx.model.RequestEntity;
 import com.zoomx.zoomx.ui.requestdetails.RequestDetailsActivity;
@@ -51,19 +58,16 @@ public class RequestListFragment extends Fragment implements SearchView.OnQueryT
 
     public void setRequestData() {
         viewModel = ViewModelProviders.of(this).get(RequestListViewModel.class);
-        viewModel.getRequests().observe(this, new Observer<List<RequestEntity>>() {
-            @Override
-            public void onChanged(@Nullable List<RequestEntity> requestEntities) {
-                if (searchView != null && searchView.isIconified())
-                    requestAdapter.setRequestEntityList(requestEntities, RequestListFragment.this);
-            }
+        viewModel.getRequests().observe(this, requestEntities -> {
+//            if (searchView != null && searchView.isIconified())
+                requestAdapter.setRequestEntityList(requestEntities, RequestListFragment.this);
         });
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_request_list, menu);
-        prepareSearchView(menu);
+//        prepareSearchView(menu);
     }
 
     private void prepareSearchView(Menu menu) {
@@ -78,8 +82,7 @@ public class RequestListFragment extends Fragment implements SearchView.OnQueryT
         searchView.setOnQueryTextListener(this);
         searchView.setBackgroundColor(Color.WHITE);
         /* Code for changing the textcolor and hint color for the search view */
-        SearchView.SearchAutoComplete searchAutoComplete =
-                (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        SearchView.SearchAutoComplete searchAutoComplete = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
         searchAutoComplete.setTextColor(Color.GRAY);
         searchAutoComplete.setHintTextColor(Color.GRAY);
     }

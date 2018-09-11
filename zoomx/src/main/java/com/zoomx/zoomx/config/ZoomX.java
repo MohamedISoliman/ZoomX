@@ -60,12 +60,9 @@ public final class ZoomX {
         if (config.canShowOnShakeEvent() && !config.canShowMenuOnAppStart()) {
             Log.d(TAG, "Show Menu on shake executed");
             mShakeEventManager = new ShakeEventManager(config.getContext());
-            mShakeEventManager.listen(new ShakeEventManager.OnShakeEventListener() {
-                @Override
-                public void OnShakeDetected() {
-                    Log.d(TAG, "shake detected");
-                    showMenuHead();
-                }
+            mShakeEventManager.listen(() -> {
+                Log.d(TAG, "shake detected");
+                showMenuHead();
             });
         }
     }
