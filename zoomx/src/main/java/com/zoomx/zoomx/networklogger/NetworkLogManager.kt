@@ -13,7 +13,7 @@ import timber.log.Timber
 
 object NetworkLogManager {
 
-
+    @JvmStatic
     fun log(builder: RequestEntity.Builder) {
         insertRequest(builder).subscribe()
     }
